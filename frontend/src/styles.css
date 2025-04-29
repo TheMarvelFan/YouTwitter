@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+.youtube-dark-mode {
+  background-color: #0f0f0f;
+  color: #f3f9ff;
+}
+
+.textColor {
+  color: #f3f9ff;
+}
+
+.metaData {
+  color: #959595;
+}
+
+.custom-hover-item:hover {
+  transition: background-color ease-in-out 0.3s;
+  background-color: rgb(107, 114, 128) !important;
+  border-radius: 10px;
+}
+
+mat-icon:hover {
+  border-radius: 50px;
+  background-color: #4b5563 !important;
+}
+
+mat-icon:active {
+  background-color: #79829a !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

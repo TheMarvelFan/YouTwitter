@@ -1,0 +1,14 @@
+{{getError$ | async}}
+
+<div class="flex self-center flex-col w-full h-full">
+  <!-- add create post component here -->
+  <div
+    class="flex max-w-md self-center flex-col"
+    *ngFor="let tweet of tweets$ | async">
+    <app-tweet-card
+      [content]="tweet.content"
+      [owner]="tweet.owner"
+      [createdAt]="tweet.createdAt"
+    ></app-tweet-card>
+  </div>
+</div>

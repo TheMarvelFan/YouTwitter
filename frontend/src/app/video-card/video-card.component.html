@@ -1,0 +1,18 @@
+<div class="flex flex-col rounded-lg shadow-sm hover:cursor-pointer h-full w-full p-5">
+  <div class="relative">
+    <img ngSrc="{{thumbnail}}" alt="thumbnail" priority width="400" height="225" class="rounded-xl object-cover mb-2 max-h-[225px] h-[225px]"/>
+    <div class="absolute bottom-3 right-1 bg-black/70 text-white text-xs px-2 py-1 rounded">
+      <p>{{formatYouTubeDuration(duration)}}</p>
+    </div>
+  </div>
+  <div class="flex mt-2">
+    <div class="rounded-full items-start mr-1">
+      <img ngSrc="{{extractAvatar(owner)}}" alt="avatar" width="50" height="50" class="rounded-full mr-2"/>
+    </div>
+    <div class="ml-1">
+      <h4 class="text-white"><strong>{{title}}</strong></h4>
+      <p class="metaData">{{extractUsername(owner)}}</p>
+      <p class="metaData">{{formatViews(views)}} views &middot; {{timeAgo(createdAt)}}</p>
+    </div>
+  </div>
+</div>

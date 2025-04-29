@@ -1,0 +1,22 @@
+<div class="flex self-center flex-col w-[598.4px] h-full border-l-2 border-r-2 border-l-[#2f3336] border-r-[#2f3336]">
+  <div class="p-4 flex self-center flex-row w-[598.4px]">
+    <div class="flex self-start mr-1">
+      <img
+        ngSrc="{{extractAvatar(owner)}}"
+        width="40"
+        height="40"
+        class="rounded-2xl"
+        alt="avatar"
+      >
+    </div>
+    <div class="flex flex-col ml-2">
+      <p>
+        {{extractFullName(owner)}} <span class="text-gray-500"> {{extractUsername(owner)}} <span class="text-xl"> &middot; </span> {{timeAgo(createdAt)}}</span>
+      </p>
+      <p>
+        {{content}}
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-[#2f3336] mt-2"></div>
+</div>

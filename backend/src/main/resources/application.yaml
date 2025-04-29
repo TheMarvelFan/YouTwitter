@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: backend
+
+  servlet:
+    multipart:
+      max-file-size: 999MB
+      max-request-size: 999MB
+
+  datasource:
+    url: jdbc:mysql://localhost:3308/mthree
+    username: root
+    password: Ilovegb@666
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  tomcat:
+    max-swallow-size: -1
+    max-http-form-post-size: 100MB
+
+cloudinary:
+  cloud_name: dnxncx5sv
+  api_key: 227931717495674
+  api_secret: dG8QqaFU3VOtPfPo2xNiXs3WH6g
+
+security:
+  jwt:
+    secret: OIU4nfu8n23fdNJUFD_A_IR8374nfo8ywsn9f2k34c2-KMCkljfasdufIKPE98okEkfkdas
+    expiration: 86400
+    refresh_expiration: 604800
+    refresh_secret: OHFR8N8njfehja80jn-JNFEJAF0nu9y_-fkeou0fejKNFOAHA08nfoweqnr3_jirqJKONF
+
+app:
+  cookie:
+    domain:
+    path: /
