@@ -96,6 +96,14 @@ export class TweetCardComponent {
     }
   }
 
+  isLiked = false;
+  likeCount = 0;
+
+  toggleLike(): void {
+    this.isLiked = !this.isLiked;
+    this.likeCount += this.isLiked ? 1 : -1;
+  }
+
   extractUsername(owner: User): string {
     if (owner && owner.username) {
       return `@${owner.username}`;

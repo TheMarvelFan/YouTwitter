@@ -6,6 +6,7 @@ import { TweetsComponent } from './tweets.component';
 import { provideHttpClient } from '@angular/common/http';
 import { TweetCardComponent } from '../tweet-card/tweet-card.component';
 import { NgOptimizedImage } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NgOptimizedImage } from '@angular/common';
   imports: [
     CommonModule,
     TweetsRoutingModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatIconModule
   ],
   providers: [
     provideHttpClient()
