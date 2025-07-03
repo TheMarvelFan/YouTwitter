@@ -14,7 +14,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -35,6 +34,10 @@ security:
     expiration: 86400
     refresh_expiration: 604800
     refresh_secret: OHFR8N8njfehja80jn-JNFEJAF0nu9y_-fkeou0fejKNFOAHA08nfoweqnr3_jirqJKONF
+
+logging:
+  level:
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
 
 app:
   cookie:

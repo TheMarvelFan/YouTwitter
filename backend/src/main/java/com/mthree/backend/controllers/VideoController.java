@@ -195,11 +195,6 @@ public class    VideoController {
             );
         }
 
-        System.out.println("Title: " + title);
-        System.out.println("Description: " + description);
-        System.out.println("Video File: " + videoFile.getName());
-        System.out.println("Thumbnail: " + thumbnail.getName());
-
         if (description == null || description.isEmpty()) {
             throw new ErrorType(
                     400,
@@ -220,6 +215,11 @@ public class    VideoController {
                     "Please provide a valid thumbnail"
             );
         }
+
+        System.out.println("Title: " + title);
+        System.out.println("Description: " + description);
+        System.out.println("Video File: " + videoFile.getName());
+        System.out.println("Thumbnail: " + thumbnail.getName());
 
         Video createdVideo = videoService.createVideo(title, description, videoFile, thumbnail);
 

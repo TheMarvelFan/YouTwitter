@@ -1,6 +1,5 @@
 package com.mthree.backend.models;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "likes")

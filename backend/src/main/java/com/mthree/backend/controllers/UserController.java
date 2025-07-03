@@ -414,7 +414,7 @@ public class UserController {
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
-                .maxAge(accessExpirationTime / 1000)
+                .maxAge(accessExpirationTime)
                 .domain(cookieDomain)
                 .sameSite("Strict")
                 .build();
@@ -427,7 +427,7 @@ public class UserController {
                 .httpOnly(true)
                 .secure(true)
                 .path("/api/v1/users/refresh-token") // Restrict to refresh endpoint
-                .maxAge(refreshExpirationTime / 1000) // Convert from ms to seconds
+                .maxAge(refreshExpirationTime) // Convert from ms to seconds
                 .domain(cookieDomain)
                 .sameSite("Strict")
                 .build();

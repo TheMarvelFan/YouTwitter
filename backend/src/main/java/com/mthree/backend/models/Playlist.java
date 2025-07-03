@@ -1,6 +1,5 @@
 package com.mthree.backend.models;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "playlists")
@@ -39,8 +37,8 @@ public class Playlist {
     @ManyToMany
     @JoinTable(
             name = "playlistvideos",
-            joinColumns = @JoinColumn(name = "playlistId"),
-            inverseJoinColumns = @JoinColumn(name = "videoId")
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id")
     )
     private Set<Video> videos = new HashSet<>();
 }

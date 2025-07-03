@@ -2,6 +2,7 @@ package com.mthree.backend.repositories;
 
 import java.util.List;
 
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,8 @@ import com.mthree.backend.models.User;
 import com.mthree.backend.models.Video;
 
 public interface VideoRepository extends JpaRepository<     Video, Long> {
-//    Page<Video> findAll(Pageable pageable);
+    @NonNull
+    Page<Video> findAll(@NonNull Pageable pageable);
 
     Page<Video> findByOwner(User owner, Pageable pageable);
 
@@ -18,5 +20,5 @@ public interface VideoRepository extends JpaRepository<     Video, Long> {
 
     Page<Video> findAllByOwner(User owner, Pageable pageable);
 
-    Page<Video> findAllByIsPublished(boolean isPublished, Pageable pageable);
+    Page<Video> findAllByisPublished(boolean is_published, Pageable pageable);
 }

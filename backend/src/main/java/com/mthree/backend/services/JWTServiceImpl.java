@@ -2,7 +2,6 @@ package com.mthree.backend.services;
 
 import javax.crypto.SecretKey;
 
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,6 @@ import com.mthree.backend.utils.ErrorType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class JWTServiceImpl implements JWTService {

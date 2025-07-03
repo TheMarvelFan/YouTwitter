@@ -3,6 +3,7 @@ package com.mthree.backend.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,8 @@ import com.mthree.backend.models.Subscription;
 import com.mthree.backend.models.User;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
-    Page<Subscription> findAll(Pageable pageable);
+    @NonNull
+    Page<Subscription> findAll(@NonNull Pageable pageable);
 
     List<Subscription> findAllByChannel(User channel);
 

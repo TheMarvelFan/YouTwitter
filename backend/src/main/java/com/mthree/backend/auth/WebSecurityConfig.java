@@ -84,12 +84,10 @@ public class WebSecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
 
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12)); // note that the strength must be the same
         // during both encoding and decoding, otherwise the password will not match
-
-        provider.setUserDetailsService(userDetailsService);
 
         System.out.println("Reaching here in WebSecurityConfig.java");
         return provider;

@@ -2,6 +2,7 @@ package com.mthree.backend.auth;
 
 import java.io.IOException;
 
+import lombok.NonNull;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +30,8 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Bearer abcdwxyz
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        // Bearer token
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;

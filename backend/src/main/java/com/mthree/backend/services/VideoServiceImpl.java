@@ -38,7 +38,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     public Page<Video> getAllVideos(int page, int size) {
-        return this.videoRepository.findAllByIsPublished(true, PageRequest.of(page, size));
+        return this.videoRepository.findAllByisPublished(true, PageRequest.of(page, size));
     }
 
     public Page<Video> getCurrentUserVideos(int page, int size) {
