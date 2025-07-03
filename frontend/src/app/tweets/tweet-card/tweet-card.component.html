@@ -22,8 +22,11 @@
     <div class="flex flex-row justify-center w-full px-4">
       <button (click)="toggleLike()">
         <div class="flex rounded-full rounded-b-full flex-row items-center">
-          <span *ngIf="!isLiked" class="material-symbols-outlined-hollow rounded-full p-2 text-gray-500 hover:bg-red-900/30 active:bg-gray-700"> favorite </span>
-          <span *ngIf="isLiked" class="material-symbols-outlined-filled rounded-full p-2 text-red-500 hover:bg-red-900/30 active:bg-gray-700"> favorite </span>
+          @if (!isLiked) {
+            <span class="material-symbols-outlined-hollow rounded-full p-2 text-gray-500 hover:bg-red-900/30 active:bg-gray-700"> favorite </span>
+          } @else {
+            <span class="material-symbols-outlined-filled rounded-full p-2 text-red-500 hover:bg-red-900/30 active:bg-gray-700"> favorite </span>
+          }
           <p class="text-gray-500 font-light ml-1"> {{likeCount}} </p>
         </div>
       </button>

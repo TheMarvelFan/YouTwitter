@@ -2,15 +2,17 @@
 
 <div class="flex flex-wrap justify-evenly">
 <!--  {{videos$ | async | json}}-->
-  <div *ngFor="let video of videos$ | async " class="p-2">
-    <app-video-card
-      [thumbnail]="transformCloudinaryUrl(video.thumbnail)"
-      [title]="video.title"
-      [owner]="video.owner"
-      [views]="video.views"
-      [duration]="video.duration"
-      [createdAt]="video.createdAt"
-    >
-    </app-video-card>
-  </div>
+    @for (video of videos$ | async; track video.id) {
+      <div class="p-2">
+        <app-video-card
+          [thumbnail]="transformCloudinaryUrl(video.thumbnail)"
+          [title]="video.title"
+          [owner]="video.owner"
+          [views]="video.views"
+          [duration]="video.duration"
+          [createdAt]="video.createdAt"
+        >
+        </app-video-card>
+      </div>
+    }
 </div>

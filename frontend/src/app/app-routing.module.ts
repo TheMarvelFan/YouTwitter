@@ -13,6 +13,15 @@ const routes: Routes = [
   {
     path: 'tweets', loadChildren: () =>
       import('./tweets/tweets.module').then(m => m.TweetsModule)
+  },
+  {
+    path: '',
+    redirectTo: '/videos',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/videos' // create a 404 component later
   }
 ];
 
