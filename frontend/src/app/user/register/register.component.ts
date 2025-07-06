@@ -121,7 +121,7 @@ export class RegisterComponent implements OnInit {
             duration: 5000,
             panelClass: ['success-snackbar']
           });
-          this.router.navigate(['/login']);
+          this.router.navigate(['/user/login']);
         },
         error: (error) => {
           this.isLoading = false;

@@ -1,215 +1,120 @@
 <div class="min-h-screen flex items-center justify-center youtube-dark-mode py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-2xl w-full space-y-8">
+  <div class="max-w-2xl w-full space-y-8 text-[#f3f9ff]">
     <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Create your account
-      </h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
+      <h2 class="mt-6 text-center text-3xl font-extrabold">Create your account</h2>
+      <p class="mt-2 text-center text-sm text-[#f3f9ff]">
         Or
-        <a routerLink="/user/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+        <a routerLink="/user/login" class="font-medium text-indigo-400 hover:text-indigo-300">
           sign in to your existing account
         </a>
       </p>
     </div>
 
-    <mat-card class="p-6">
+    <mat-card class="p-6 bg-[#1f1f1f] text-[#f3f9ff]">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Full Name Field -->
-          <mat-form-field appearance="outline" class="w-full">
+          <!-- Full Name -->
+          <mat-form-field class="w-full">
             <mat-label>Full Name</mat-label>
-            <input
-              matInput
-              formControlName="fullName"
-              placeholder="Enter your full name"
-              autocomplete="name">
+            <input matInput formControlName="fullName" placeholder="Enter your full name" autocomplete="name">
             @if (registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched) {
-              <mat-error>
-                {{ getErrorMessage('fullName') }}
-              </mat-error>
+              <mat-error>{{ getErrorMessage('fullName') }}</mat-error>
             }
           </mat-form-field>
 
-          <!-- Username Field -->
+          <!-- Username -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Username</mat-label>
-            <input
-              matInput
-              formControlName="username"
-              placeholder="Enter a unique username"
-              autocomplete="username">
+            <input matInput formControlName="username" placeholder="Enter a unique username" autocomplete="username">
             @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
-              <mat-error>
-                {{ getErrorMessage('username') }}
-              </mat-error>
+              <mat-error>{{ getErrorMessage('username') }}</mat-error>
             }
           </mat-form-field>
         </div>
 
-        <!-- Email Field -->
+        <!-- Email -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Email</mat-label>
-          <input
-            matInput
-            formControlName="email"
-            placeholder="Enter your email address"
-            type="email"
-            autocomplete="email">
+          <input matInput formControlName="email" type="email" placeholder="Enter your email address" autocomplete="email">
           @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-            <mat-error>
-              {{ getErrorMessage('email') }}
-            </mat-error>
+            <mat-error>{{ getErrorMessage('email') }}</mat-error>
           }
         </mat-form-field>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Password Field -->
+          <!-- Password -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Password</mat-label>
-            <input
-              matInput
-              [type]="hidePassword ? 'password' : 'text'"
-              formControlName="password"
-              placeholder="Enter your password"
-              autocomplete="new-password">
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hidePassword = !hidePassword"
-              [attr.aria-label]="'Hide password'"
-              type="button">
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password" autocomplete="new-password">
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" type="button">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
             @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-              <mat-error>
-                {{ getErrorMessage('password') }}
-              </mat-error>
+              <mat-error>{{ getErrorMessage('password') }}</mat-error>
             }
           </mat-form-field>
 
-          <!-- Confirm Password Field -->
+          <!-- Confirm Password -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Confirm Password</mat-label>
-            <input
-              matInput
-              [type]="hideConfirmPassword ? 'password' : 'text'"
-              formControlName="confirmPassword"
-              placeholder="Confirm your password"
-              autocomplete="new-password">
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hideConfirmPassword = !hideConfirmPassword"
-              [attr.aria-label]="'Hide password'"
-              type="button">
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" placeholder="Confirm your password" autocomplete="new-password">
+            <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" type="button">
               <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
             @if ((registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) || registerForm.hasError('passwordMismatch')) {
-              <mat-error>
-                {{ getErrorMessage('confirmPassword') }}
-              </mat-error>
+              <mat-error>{{ getErrorMessage('confirmPassword') }}</mat-error>
             }
           </mat-form-field>
         </div>
 
-        <!-- Avatar Image Upload -->
+        <!-- Avatar Upload -->
         <div class="space-y-4">
-          <h3 class="text-lg font-medium text-gray-900">Profile Images</h3>
-
+          <h3 class="text-lg font-medium">Profile Images</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Avatar Upload -->
             <div class="space-y-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Avatar Image *
-              </label>
+              <label class="block text-sm font-medium">Avatar Image *</label>
               <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
                   @if (avatarPreview) {
-                  <img
-                    ngSrc="{{ avatarPreview }}"
-                    alt="Avatar preview"
-                    class="h-16 w-16 rounded-full object-cover border-2 border-gray-300" fill>
+                    <img [src]="avatarPreview" alt="Avatar preview" class="h-16 w-16 rounded-full object-cover border-2 border-gray-300">
                   } @else {
-                    <div
-                      class="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center border-2 border-gray-300">
+                    <div class="h-16 w-16 rounded-full bg-gray-800 flex items-center justify-center border-2 border-gray-600">
                       <mat-icon class="text-gray-400">person</mat-icon>
                     </div>
                   }
                 </div>
                 <div class="flex-1">
-                  <input
-                    type="file"
-                    #avatarInput
-                    (change)="onFileSelected($event, 'avatar')"
-                    accept="image/*"
-                    class="hidden">
-                  <button
-                    mat-stroked-button
-                    type="button"
-                    (click)="avatarInput.click()"
-                    color="primary">
-                    Choose Avatar
-                  </button>
-                  <p class="mt-1 text-xs text-gray-500">
-                    PNG, JPG, GIF up to 5MB
-                  </p>
+                  <input type="file" #avatarInput (change)="onFileSelected($event, 'avatar')" accept="image/*" class="hidden">
+                  <button mat-stroked-button type="button" (click)="avatarInput.click()" color="primary">Choose Avatar</button>
+                  <p class="mt-1 text-xs text-gray-400">PNG, JPG, GIF up to 5MB</p>
                 </div>
               </div>
               @if (registerForm.get('avatar')?.invalid && registerForm.get('avatar')?.touched) {
-                <mat-error>
-                  {{ getErrorMessage('avatar') }}
-                </mat-error>
+                <mat-error>{{ getErrorMessage('avatar') }}</mat-error>
               }
             </div>
 
-            <!-- Cover Image Upload -->
+            <!-- Cover Upload -->
             <div class="space-y-2">
-              <label class="block text-sm font-medium text-gray-700">
-                Cover Image (Optional)
-              </label>
+              <label class="block text-sm font-medium">Cover Image (Optional)</label>
               <div class="space-y-2">
                 @if (coverImagePreview) {
-                  <div
-                    class="relative">
-                    <img
-                      ngSrc="{{ coverImagePreview }}"
-                      alt="Cover preview"
-                      class="h-32 w-full rounded-lg object-cover border-2 border-gray-300" fill>
-                  </div>
+                  <img [src]="coverImagePreview" alt="Cover preview" class="h-32 w-full rounded-lg object-cover border-2 border-gray-300">
                 } @else {
-                  <div
-                    class="h-32 w-full rounded-lg bg-gray-200 flex items-center justify-center border-2 border-dashed border-gray-300">
+                  <div class="h-32 w-full rounded-lg bg-gray-800 flex items-center justify-center border-2 border-dashed border-gray-600">
                     <mat-icon class="text-gray-400 text-4xl">image</mat-icon>
                   </div>
                 }
-                <input
-                  type="file"
-                  #coverInput
-                  (change)="onFileSelected($event, 'coverImage')"
-                  accept="image/*"
-                  class="hidden">
-                <button
-                  mat-stroked-button
-                  type="button"
-                  (click)="coverInput.click()"
-                  color="primary">
-                  Choose Cover Image
-                </button>
-                <p class="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 5MB
-                </p>
+                <input type="file" #coverInput (change)="onFileSelected($event, 'coverImage')" accept="image/*" class="hidden">
+                <button mat-stroked-button type="button" (click)="coverInput.click()" color="primary">Choose Cover Image</button>
+                <p class="text-xs text-gray-400">PNG, JPG, GIF up to 5MB</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Submit Button -->
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="w-full py-3"
-          [disabled]="isLoading">
+        <!-- Submit -->
+        <button mat-raised-button color="primary" type="submit" class="w-full py-3" [disabled]="isLoading">
           @if (isLoading) {
             <mat-spinner diameter="20" class="mr-2"></mat-spinner>
           }
@@ -220,21 +125,15 @@
       <div class="mt-6">
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
+            <div class="w-full border-t border-gray-700"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Already have an account?</span>
+            <span class="px-2 bg-[#1f1f1f] text-gray-400">Already have an account?</span>
           </div>
         </div>
 
         <div class="mt-6">
-          <button
-            mat-stroked-button
-            color="primary"
-            routerLink="/login"
-            class="w-full">
-            Sign In Instead
-          </button>
+          <button mat-stroked-button color="primary" routerLink="/user/login" class="w-full">Sign In Instead</button>
         </div>
       </div>
     </mat-card>

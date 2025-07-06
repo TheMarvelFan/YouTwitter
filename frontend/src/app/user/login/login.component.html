@@ -1,65 +1,40 @@
 <div class="min-h-screen flex items-center justify-center youtube-dark-mode py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
+  <div class="max-w-md w-full space-y-8 text-[#f3f9ff]">
     <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Sign in to your account
-      </h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
+      <h2 class="mt-6 text-center text-3xl font-extrabold">Sign in to your account</h2>
+      <p class="mt-2 text-center text-sm text-[#f3f9ff]">
         Or
-        <a routerLink="/user/register" class="font-medium text-indigo-600 hover:text-indigo-500">
+        <a routerLink="/user/register" class="font-medium text-indigo-400 hover:text-indigo-300">
           create a new account
         </a>
       </p>
     </div>
 
-    <mat-card class="p-6">
+    <mat-card class="p-6 bg-[#1f1f1f] text-[#f3f9ff]">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Username Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Username</mat-label>
-          <input
-            matInput
-            formControlName="username"
-            placeholder="Enter your username"
-            autocomplete="username">
+          <input matInput formControlName="username" placeholder="Enter your username" autocomplete="username">
           @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
-            <mat-error>
-              {{ getErrorMessage('username') }}
-            </mat-error>
+            <mat-error>{{ getErrorMessage('username') }}</mat-error>
           }
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Password</mat-label>
-          <input
-            matInput
-            [type]="hidePassword ? 'password' : 'text'"
-            formControlName="password"
-            placeholder="Enter your password"
-            autocomplete="current-password">
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword"
-            type="button">
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password" autocomplete="current-password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword" type="button">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <mat-error>
-              {{ getErrorMessage('password') }}
-            </mat-error>
+            <mat-error>{{ getErrorMessage('password') }}</mat-error>
           }
         </mat-form-field>
 
         <!-- Submit Button -->
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="w-full py-3"
-          [disabled]="isLoading">
+        <button mat-raised-button color="primary" type="submit" class="w-full py-3" [disabled]="isLoading">
           @if (isLoading) {
             <mat-spinner diameter="20" class="mr-2"></mat-spinner>
           }
@@ -70,19 +45,15 @@
       <div class="mt-6">
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
+            <div class="w-full border-t border-gray-700"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Don't have an account?</span>
+            <span class="px-2 bg-[#1f1f1f] text-gray-400">Don't have an account?</span>
           </div>
         </div>
 
         <div class="mt-6">
-          <button
-            mat-stroked-button
-            color="primary"
-            routerLink="/register"
-            class="w-full">
+          <button mat-stroked-button color="primary" routerLink="/user/register" class="w-full">
             Create New Account
           </button>
         </div>

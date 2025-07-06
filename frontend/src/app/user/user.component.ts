@@ -51,6 +51,7 @@ export class UserComponent implements OnInit {
         this.isLoggingOut = false;
       },
       error: (error) => {
+        console.log("Error during logout: ", error);
         this.isLoggingOut = false;
         this.snackBar.open('Error logging out', 'Close', {
           duration: 3000,

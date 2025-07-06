@@ -24,7 +24,6 @@ export class VideoService {
         .set('size', '10')
     };
 
-    console.log("Before error occurs");
     this.videos$ = this.http.get<VideoResponse>(`${this.config.apiUrl}/videos/`, options).pipe(
       map(response => response?.data?.content),
       shareReplay(1)

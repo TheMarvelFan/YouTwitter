@@ -1,9 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
+/* Dark mode background */
 .youtube-dark-mode {
   background-color: #0f0f0f;
   color: #f3f9ff;
+}
+
+/* Material cards inside dark mode */
+.youtube-dark-mode mat-card {
+  background-color: #1f1f1f !important;
+  color: #f3f9ff !important;
+}
+
+/* Material form controls */
+.youtube-dark-mode .mat-form-field-label,
+.youtube-dark-mode .mat-input-element,
+.youtube-dark-mode .mat-select-value,
+.youtube-dark-mode .mat-form-field-outline,
+.youtube-dark-mode .mat-form-field-outline-thick {
+  color: #f3f9ff !important;
+  border-color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-form-field-underline,
+.youtube-dark-mode .mat-hint,
+.youtube-dark-mode .mat-error {
+  color: #f3f9ff !important;
+}
+
+/* Material icon in dark mode */
+.youtube-dark-mode mat-icon {
+  color: #f3f9ff !important;
+}
+
+/* Optional icon hover effects */
+.youtube-dark-mode mat-icon:hover {
+  border-radius: 50px;
+  background-color: #4b5563 !important;
+}
+
+.youtube-dark-mode mat-icon:active {
+  background-color: #79829a !important;
 }
 
 .textColor {
