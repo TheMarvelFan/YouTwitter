@@ -2,6 +2,8 @@ package com.mthree.backend.controllers;
 
 import java.util.Map;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
@@ -156,6 +158,7 @@ public class UserController {
         String accessToken = userStringPair.getSecond();
 
         setAccessTokenCookie(response, accessToken);
+        System.out.println("Refresh token: " + loggedInUser.getRefreshToken());
         setRefreshTokenCookie(response, loggedInUser.getRefreshToken());
 
         return ResponseEntity.ok(
@@ -169,27 +172,36 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<Map<String, String>> logoutUser(
-            @RequestHeader("Authorization") String authHeader,
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            HttpServletRequest request,
             HttpServletResponse response,
             HttpSession session
     ) {
         System.out.println("Reaching controller for logout");
 
-        if (authHeader == null || authHeader.isEmpty()) {
+        String token = null;
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        } else {
+            // If no Authorization header, try to get from cookies
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("accessToken".equals(cookie.getName())) { // Replace with your actual cookie name
+                        token = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (token == null || token.isEmpty()) {
             throw new ErrorType(
                     400,
                     "Please provide a valid User ID"
             );
         }
-
-        if (!authHeader.startsWith("Bearer ")) {
-            throw new ErrorType(
-                    400,
-                    "Invalid token format"
-            );
-        }
-
-        String token = authHeader.substring(7);
 
         String message = userService.logoutUser(token);
 
@@ -426,8 +438,8 @@ public class UserController {
         ResponseCookie cookie = ResponseCookie.from("refreshToken", token)
                 .httpOnly(true)
                 .secure(true)
-                .path("/api/v1/users/refresh-token") // Restrict to refresh endpoint
-                .maxAge(refreshExpirationTime) // Convert from ms to seconds
+                .path("/")
+                .maxAge(refreshExpirationTime)
                 .domain(cookieDomain)
                 .sameSite("Strict")
                 .build();
