@@ -81,3 +81,70 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
   font-size: 20px;
 }
+
+.success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+/* Dialog styles for dark mode */
+.youtube-dark-mode .mat-dialog-container {
+  background-color: #1f1f1f !important;
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-dialog-title {
+  color: #f3f9ff !important;
+}
+
+/* Menu styles for dark mode */
+.youtube-dark-mode .mat-menu-panel {
+  background-color: #1f1f1f !important;
+}
+
+.youtube-dark-mode .mat-menu-item {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-menu-item:hover {
+  background-color: #2d2d2d !important;
+}
+
+/* Form field styles for dark mode */
+.youtube-dark-mode .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-form-field-label {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-input-element {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-hint {
+  color: #959595 !important;
+}
+
+/* Button styles for dark mode */
+.youtube-dark-mode .mat-raised-button {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode .mat-button {
+  color: #f3f9ff !important;
+}
+
+/* Fab button positioning and styling */
+.mat-fab {
+  position: fixed !important;
+  top: 16px !important;
+  right: 16px !important;
+  z-index: 1000 !important;
+}

@@ -1,0 +1,47 @@
+<div class="youtube-dark-mode">
+  <h2 mat-dialog-title class="text-[#f3f9ff] mb-4">Add New Tweet</h2>
+
+  <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="space-y-4">
+      <!-- Content Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label class="text-[#f3f9ff]">Tweet Content</mat-label>
+        <textarea matInput
+                  formControlName="content"
+                  placeholder="What's happening?"
+                  rows="4"
+                  maxlength="280"
+                  class="text-[#f3f9ff]"
+                  (input)="updateCharacterCount()"></textarea>
+        <mat-hint align="end" class="text-gray-400">
+          {{characterCount}}/280
+        </mat-hint>
+        @if (tweetForm.get('content')?.hasError("required")) {
+          <mat-error>
+            Tweet content is required
+          </mat-error>
+        } @else if (tweetForm.get('content')?.hasError('maxlength')) {
+          <mat-error>
+            Tweet content cannot exceed 280 characters
+          </mat-error>
+        }
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+      <button mat-button type="button" (click)="onCancel()" class="text-[#f3f9ff]">
+        Cancel
+      </button>
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!tweetForm.valid || isPosting"
+              class="min-w-[100px]">
+        @if (isPosting) {
+          <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+        }
+        {{ isPosting ? 'Posting...' : 'Post Tweet' }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

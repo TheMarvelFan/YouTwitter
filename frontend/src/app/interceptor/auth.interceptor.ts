@@ -11,9 +11,15 @@ import { UserService } from '../user/service/user.service';
 import { Router } from '@angular/router';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  // Check if the request body is FormData (file upload)
+  const isFormData = req.body instanceof FormData;
+
   const authReq = req.clone({
     setHeaders: {
-      'Content-Type': req.headers.get('Content-Type') || 'application/json'
+      // Only set Content-Type for non-FormData requests
+      ...(isFormData ? {} : {
+        'Content-Type': req.headers.get('Content-Type') || 'application/json'
+      })
     },
     withCredentials: true
   });
@@ -46,8 +52,18 @@ function handle401Error (request: HttpRequest<any>, next: HttpHandlerFn): Observ
         isRefreshing = false;
         refreshTokenSubject.next(true);
 
-        // Retry the original request
-        return next(request.clone({ withCredentials: true }));
+        // Retry the original request with proper headers
+        const isFormData = request.body instanceof FormData;
+        const retryRequest = request.clone({
+          setHeaders: {
+            ...(isFormData ? {} : {
+              'Content-Type': request.headers.get('Content-Type') || 'application/json'
+            })
+          },
+          withCredentials: true
+        });
+
+        return next(retryRequest);
       }),
       catchError((error) => {
         isRefreshing = false;
@@ -62,7 +78,19 @@ function handle401Error (request: HttpRequest<any>, next: HttpHandlerFn): Observ
     return refreshTokenSubject.pipe(
       filter(token => token != null),
       take(1),
-      switchMap(() => next(request.clone({ withCredentials: true })))
+      switchMap(() => {
+        const isFormData = request.body instanceof FormData;
+        const retryRequest = request.clone({
+          setHeaders: {
+            ...(isFormData ? {} : {
+              'Content-Type': request.headers.get('Content-Type') || 'application/json'
+            })
+          },
+          withCredentials: true
+        });
+
+        return next(retryRequest);
+      })
     );
   }
 }

@@ -1,0 +1,7 @@
+.fixed {
+  position: fixed;
+}
+
+.z-50 {
+  z-index: 50;
+}

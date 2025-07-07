@@ -1,0 +1,98 @@
+<div class="youtube-dark-mode">
+  <h2 mat-dialog-title class="text-[#f3f9ff] mb-4">Add New Video</h2>
+
+  <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="space-y-4">
+      <!-- Title Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label class="text-[#f3f9ff]">Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter video title" class="text-[#f3f9ff]">
+        @if (videoForm.get('title')?.hasError('required')) {
+          <mat-error class="text-red-500">
+            Title is required
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Description Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label class="text-[#f3f9ff]">Description</mat-label>
+        <textarea matInput formControlName="description"
+                  placeholder="Enter video description"
+                  rows="4"
+                  class="text-[#f3f9ff]"></textarea>
+        @if (videoForm.get('description')?.hasError('required')) {
+          <mat-error class="text-red-500">
+            Description is required
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Video File Upload -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-[#f3f9ff]">Video File *</label>
+        <input type="file"
+               accept="video/*"
+               (change)="onVideoFileSelected($event)"
+               class="block w-full text-sm text-[#f3f9ff]
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-full file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-blue-50 file:text-blue-700
+                          hover:file:bg-blue-100">
+        @if (videoForm.get('videoFile')?.hasError('required')) {
+          <div class="text-red-400 text-sm">
+            Video file is required
+          </div>
+        }
+      </div>
+
+      <!-- Thumbnail Upload -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-[#f3f9ff]">Thumbnail *</label>
+        <input type="file"
+               accept="image/*"
+               (change)="onThumbnailSelected($event)"
+               class="block w-full text-sm text-[#f3f9ff]
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-full file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-blue-50 file:text-blue-700
+                          hover:file:bg-blue-100">
+        @if (videoForm.get('thumbnail')?.hasError('required')) {
+          <div class="text-red-400 text-sm">
+            Thumbnail is required
+          </div>
+        }
+      </div>
+
+      <!-- Thumbnail Preview -->
+      @if (thumbnailPreview) {
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-[#f3f9ff] mb-2">Thumbnail Preview:</label>
+          <div class="flex justify-center">
+            <img [src]="thumbnailPreview"
+                 alt="Thumbnail preview"
+                 class="max-w-xs max-h-32 object-cover rounded-lg border border-gray-600">
+          </div>
+        </div>
+      }
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+      <button mat-button type="button" (click)="onCancel()" class="text-[#f3f9ff]">
+        Cancel
+      </button>
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!videoForm.valid || isUploading"
+              class="min-w-[100px]">
+        @if (isUploading) {
+          <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+        }
+        {{ isUploading ? 'Uploading...' : 'Upload Video' }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

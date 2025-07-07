@@ -1,0 +1,20 @@
+.youtube-dark-mode {
+  background-color: #1f1f1f;
+  color: #f3f9ff;
+}
+
+.youtube-dark-mode ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode ::ng-deep .mat-form-field-label {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode ::ng-deep .mat-input-element {
+  color: #f3f9ff !important;
+}
+
+.youtube-dark-mode ::ng-deep .mat-hint {
+  color: #959595 !important;
+}
