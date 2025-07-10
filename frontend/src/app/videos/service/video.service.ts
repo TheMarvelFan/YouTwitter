@@ -54,4 +54,52 @@ export class VideoService {
   refreshVideos(): void {
     this.loadVideos();
   }
+
+  // Get a single video by ID
+  getVideoById(videoId: number): Observable<ResponseType<Video>> {
+    return this.http.get<ResponseType<Video>>(`${this.config.apiUrl}/videos/${videoId}`);
+  }
+
+  // Method to update a video
+  updateVideo(videoId: number, title?: string, description?: string, thumbnail?: File): Observable<Video> {
+    const formData = new FormData();
+
+    if (title) formData.append('title', title);
+    if (description) formData.append('description', description);
+    if (thumbnail) formData.append('thumbnail', thumbnail);
+
+    return this.http.patch<ResponseType<Video>>(`${this.config.apiUrl}/videos/${videoId}`, formData, {
+      withCredentials: true
+    }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  // Method to delete a video
+  deleteVideo(videoId: number): Observable<ResponseType<string>> {
+    return this.http.delete<ResponseType<string>>(`${this.config.apiUrl}/videos/${videoId}`, {
+      withCredentials: true
+    });
+  }
+
+  // Method to toggle publish status
+  togglePublish(videoId: number): Observable<ResponseType<Video>> {
+    return this.http.patch<ResponseType<Video>>(`${this.config.apiUrl}/videos/toggle/publish/${videoId}`, {}, {
+      withCredentials: true
+    });
+  }
+
+  // Method to get current user's videos
+  getCurrentUserVideos(page: number = 0, size: number = 10): Observable<VideoResponse> {
+    const options = {
+      params: new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString())
+    };
+
+    return this.http.get<VideoResponse>(`${this.config.apiUrl}/videos/current`, {
+      ...options,
+      withCredentials: true
+    });
+  }
 }

@@ -14,13 +14,15 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { WatchVideoComponent } from './watch-video/watch-video.component';
 
 
 @NgModule({
   declarations: [
     VideosComponent,
     VideoCardComponent,
-    AddVideoComponent
+    AddVideoComponent,
+    WatchVideoComponent
   ],
   imports: [
     CommonModule,

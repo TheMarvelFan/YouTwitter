@@ -1,0 +1,237 @@
+<div class="max-w-6xl mx-auto">
+  <!-- Loading State -->
+  @if (loading) {
+    <div class="page-loading">
+      <div class="loading-spinner"></div>
+    </div>
+  } @else if (!loading && video) {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Video Player Section -->
+      <div class="lg:col-span-2">
+        <!-- Video Player -->
+        <div class="video-container" (mousemove)="onMouseMove()">
+          <!-- Video Error Display -->
+          @if (videoError) {
+            <div class="video-error">
+              <div class="error-content">
+                <i class="material-icons error-icon">error</i>
+                <h3>Video Error</h3>
+                <p>{{videoErrorMessage}}</p>
+                <button class="btn-primary" (click)="reloadVideo()">
+                  Try Again
+                </button>
+              </div>
+            </div>
+          } @else {
+            <video
+              #videoPlayer
+              [src]="video.videoFile"
+              class="video-player"
+              (loadedmetadata)="onVideoLoaded()"
+              (timeupdate)="onTimeUpdate()"
+              (waiting)="onWaiting()"
+              (canplay)="onCanPlay()"
+              (canplaythrough)="onCanPlayThrough()"
+              (error)="onVideoError($event)"
+              (click)="togglePlayPause()"
+              preload="metadata"
+              [poster]="video.thumbnail">
+              <!-- Fallback content for browsers that don't support video -->
+              <p>Your browser doesn't support HTML5 video.
+                <a [href]="video.videoFile" target="_blank">Download the video</a> instead.
+              </p>
+            </video>
+          }
+
+          <!-- Buffering Spinner -->
+          @if (buffering) {
+            <div class="loading-spinner"></div>
+          }
+
+          <!-- Video Controls -->
+          @if (!videoError) {
+            <div class="video-controls" [class.show]="showControls">
+              <!-- Progress Bar -->
+              <div class="progress-container" (click)="onProgressClick($event)">
+                <div #progressBar class="progress-bar"></div>
+              </div>
+
+              <!-- Control Buttons -->
+              <div class="controls-row">
+                <!-- Play/Pause -->
+                <button class="control-btn" (click)="togglePlayPause()" [disabled]="!videoLoaded">
+                  <i class="material-icons">{{isPlaying ? 'pause' : 'play_arrow'}}</i>
+                </button>
+
+                <!-- Volume -->
+                <div class="volume-container">
+                  <button class="control-btn" (click)="toggleMute()" [disabled]="!videoLoaded">
+                    <i class="material-icons">
+                      {{isMuted ? 'volume_off' : volume > 0.5 ? 'volume_up' : 'volume_down'}}
+                    </i>
+                  </button>
+                  <input
+                    #volumeSlider
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    [value]="volume"
+                    (input)="changeVolume($event)"
+                    [disabled]="!videoLoaded"
+                    class="volume-slider">
+                </div>
+
+                <!-- Time Display -->
+                <div class="time-display">
+                  {{formatTime(currentTime)}} / {{formatTime(duration)}}
+                </div>
+
+                <div class="flex-1"></div>
+
+                <!-- Playback Speed -->
+                <div class="relative">
+                  <button class="control-btn" (click)="speedMenuOpen = !speedMenuOpen" [disabled]="!videoLoaded">
+                    <span style="font-size: 12px; font-weight: bold;">{{playbackRate}}x</span>
+                  </button>
+                  @if (speedMenuOpen) {
+                    <div #speedMenu class="dropdown-menu" style="bottom: 100%; right: 0;">
+                      @for (speed of playbackSpeeds; track speed) {
+                        <div
+                          class="dropdown-item"
+                          [class.active]="playbackRate === speed"
+                          (click)="changePlaybackSpeed(speed); speedMenuOpen = false">
+                          {{speed}}x
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Fullscreen -->
+                <button class="control-btn" (click)="toggleFullscreen()" [disabled]="!videoLoaded">
+                  <i class="material-icons">{{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}}</i>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Video Info -->
+        <div class="video-info">
+          <h1 class="video-title">{{video.title}}</h1>
+          <div class="video-meta">
+            <span>{{video.views}} views</span>
+            <span class="mx-2">•</span>
+            <span>{{formatDate(video.createdAt)}}</span>
+            <span class="mx-2">•</span>
+            <span>{{video.owner.username}}</span>
+          </div>
+
+<!--          &lt;!&ndash; Debug Information (Remove in production) &ndash;&gt;-->
+<!--          @if (video.videoFile) {-->
+<!--            <div class="debug-info mt-4 p-3 bg-gray-100 rounded text-sm">-->
+<!--              <strong>Debug Info:</strong><br>-->
+<!--              Video URL: {{video.videoFile}}<br>-->
+<!--              Video Loaded: {{videoLoaded}}<br>-->
+<!--              Video Error: {{videoError}}<br>-->
+<!--              @if (videoError) {-->
+<!--                Error Message: {{videoErrorMessage}}<br>-->
+<!--              }-->
+<!--              Valid URL: {{isValidVideoUrl(video.videoFile)}}<br>-->
+<!--            </div>-->
+<!--          }-->
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+          <div class="comments-header">
+            {{totalComments}} Comments
+          </div>
+
+          <!-- Comment Form or Sign In Prompt -->
+          @if (!isLoggedIn) {
+            <div class="signin-prompt">
+              <p class="mb-4">Join the conversation!</p>
+              <button class="btn-primary" (click)="goToSignIn()">
+                Sign in to drop a comment
+              </button>
+            </div>
+          } @else {
+            <div class="comment-form">
+              <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+                            <textarea
+                              formControlName="content"
+                              class="comment-input"
+                              [placeholder]="editingCommentId ? 'Edit your comment...' : 'Add a comment...'"
+                              rows="3">
+                            </textarea>
+                <div class="comment-actions">
+                  <button
+                    type="submit"
+                    class="btn-primary"
+                    [disabled]="!commentForm.valid || submittingComment">
+                    {{editingCommentId ? 'Update' : 'Comment'}}
+                  </button>
+                  @if (editingCommentId) {
+                    <button
+                      type="button"
+                      class="btn-secondary"
+                      (click)="cancelEdit()">
+                      Cancel
+                    </button>
+                  }
+                </div>
+              </form>
+            </div>
+          }
+
+          <!-- Comments List -->
+          @if (commentsLoading) {
+            <div class="flex justify-center py-8">
+              <div class="loading-spinner"></div>
+            </div>
+          } @else {
+            <div>
+              @for (comment of comments; track comment.id) {
+                <div class="comment-item">
+                  <div class="comment-avatar">
+                    {{comment.owner.username.charAt(0).toUpperCase()}}
+                  </div>
+                  <div class="comment-content">
+                    <div class="comment-header">
+                      <span class="comment-author">{{comment.owner.username}}</span>
+                      <span class="comment-date">{{formatDate(comment.createdAt)}}</span>
+                    </div>
+                    <p class="comment-text">{{comment.content}}</p>
+                    @if (canEditComment(comment)) {
+                      <div class="comment-actions-row">
+                        <button
+                          class="comment-action-btn"
+                          (click)="editComment(comment)">
+                          Edit
+                        </button>
+                        <button
+                          class="comment-action-btn"
+                          (click)="deleteComment(comment.id)">
+                          Delete
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+
+          <!-- No Comments Message -->
+          @if (!commentsLoading && comments.length === 0) {
+            <div class="text-center py-8 text-gray-500">
+              No comments yet. Be the first to comment!
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

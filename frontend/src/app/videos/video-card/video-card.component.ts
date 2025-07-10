@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {User} from '../../models/User';
+import { Component, Input } from '@angular/core';
+import { User } from '../../models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-card',
@@ -36,6 +37,14 @@ export class VideoCardComponent {
 
   @Input()
   createdAt: Date = new Date();
+
+  @Input() videoId!: number;
+
+  constructor(private router: Router) {}
+
+  onCardClick(): void {
+    this.router.navigate(['/videos', this.videoId]);
+  }
 
   extractUsername(owner: User): string {
     if (owner && owner.username) {

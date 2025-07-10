@@ -14,6 +14,23 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Check if the request body is FormData (file upload)
   const isFormData = req.body instanceof FormData;
 
+  const anonymousEndpoints = [
+    '/api/v1/users/register',
+    '/api/v1/users/login',
+    '/api/v1/videos/', // GET all videos
+    '/api/v1/tweets/', // GET all tweets
+  ];
+
+  const isAnonymousVideoRequest = req.method === 'GET' &&
+    req.url.match(/\/api\/v1\/videos\/\d+$/);
+
+  const isAnonymousTweetRequest = req.method === 'GET' &&
+    req.url.match(/\/api\/v1\/tweets\/\d+$/);
+
+  const shouldIncludeCredentials = !anonymousEndpoints.some(endpoint =>
+    req.url.includes(endpoint)
+  ) && !isAnonymousVideoRequest && !isAnonymousTweetRequest;
+
   const authReq = req.clone({
     setHeaders: {
       // Only set Content-Type for non-FormData requests
@@ -21,7 +38,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         'Content-Type': req.headers.get('Content-Type') || 'application/json'
       })
     },
-    withCredentials: true
+    withCredentials: shouldIncludeCredentials
   });
 
   return next(authReq).pipe(
